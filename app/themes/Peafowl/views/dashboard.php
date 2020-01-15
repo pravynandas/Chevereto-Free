@@ -772,7 +772,7 @@
 					<?php
                         echo CHV\Render\get_select_options_html([1 => _s('Enabled'), 0 => _s('Disabled')], CHV\Settings::get('enable_duplicate_uploads')); ?>
 				</select></div>
-				<div class="input-below"><?php _se("Enable this if you want to allow duplicate uploads from the same IP within 24hrs. This setting doesn't affect administrators."); ?></div>
+				<div class="input-below"><?php _se("Enable this if you want to allow duplicate uploads from the same IP."); ?></div>
 			</div>
 
 			<hr class="line-separator"></hr>

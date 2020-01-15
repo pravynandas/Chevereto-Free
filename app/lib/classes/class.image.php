@@ -615,17 +615,16 @@ class Image
 
     // Mostly for people uploading two times the same image to test or just bug you
     // $mixed => $_FILES or md5 string
-    public static function isDuplicatedUpload($mixed, $time_frame='P1D')
+    public static function isDuplicatedUpload($mixed)
     {
         $md5_file = (is_array($mixed) && isset($mixed['tmp_name'])) ? md5_file($mixed['tmp_name']) : $mixed;
         if (!isset($md5_file)) {
             throw new Exception('Unable to process md5_file', 100);
         }
         $db = DB::getInstance();
-        $db->query('SELECT * FROM ' . DB::getTable('images') . ' WHERE (image_md5=:md5 OR image_source_md5=:md5) AND image_uploader_ip=:ip AND image_date_gmt > :date_gmt');
+        $db->query('SELECT * FROM ' . DB::getTable('images') . ' WHERE (image_md5=:md5 OR image_source_md5=:md5) AND image_uploader_ip=:ip');
         $db->bind(':md5', $md5_file);
         $db->bind(':ip', G\get_client_ip());
-        $db->bind(':date_gmt', G\datetime_sub(G\datetimegmt(), $time_frame));
         $db->exec();
         return $db->fetchColumn();
     }
@@ -649,7 +648,7 @@ class Image
                 }
             }
 
-            $do_dupe_check = !getSetting('enable_duplicate_uploads') && !$user['is_admin'];
+            $do_dupe_check = !getSetting('enable_duplicate_uploads'); // && !$user['is_admin'];
 
             // Detect duplicated uploads ($_FILES) by IP + MD5 (first layer)
             if ($do_dupe_check && self::isDuplicatedUpload($source)) {
