@@ -1705,7 +1705,7 @@ $(function() {
 		var action = !liked ? 'like' : 'dislike';
 		var content = {
 			id: isSingle ? CHV.obj.resource.id : $(this).closest("[data-id]").attr("data-id"),
-			type: isSingle ? CHV.obj.resource.type : $(this).closest("[data-type]").attr("data-type")
+			type: isSingle ? CHV.obj.resource.type : $(this).closest("[data-id]").attr("data-type")
 		};
 		var $targets = isSingle ? $this : $("[data-type=" + content.type + "][data-id=" + content.id + "]");
 		var ajax = {
@@ -1721,10 +1721,10 @@ $(function() {
 				var response = XHR.responseJSON;
 				$this.data("XHR", false);
 				if(response.status_code !== 200) {
-					PF.fn.growl.expirable(PF.fn._s("An error occurred. Please try again later."));
+					PF.fn.growl.expirable(PF.fn._s("An error occurred while updating the like/dislike. Please try again later."));
 					return;
 				}
-				if(isSingle && typeof response.content !== typeof undefined) {
+				if(typeof response.content !== typeof undefined) {
 					$("[data-text=likes-count]").html(response.content.likes);
 				}
 				$targets.attr("data-liked", liked ? 0 : 1); // Toggle indicator

@@ -1223,6 +1223,47 @@ $route = function($handler) {
 				}
 			break;
 
+		case 'like':
+			$id = CHV\decodeID($_REQUEST['like']['id']);
+			$type = $_REQUEST['like']['object'];
+            CHV\DB::insert('likes', [
+                'date_gmt'			=> G\datetimegmt(),
+                'date'				=> G\datetimegmt('Y-m-d'),
+                'user_id'			=> $logged_user['id'],
+                'content_type'		=> $type,
+                'content_id'	 	=> $id,
+                'content_user_id'	=> $logged_user['id'],
+                'ip'				=> '::1',
+            ]);
+			$json_array['success'] = [
+				'message' => $type . ' with id '. $id . ' liked successfully',
+				'code' 	  => 200,
+			];
+			$db = CHV\DB::getInstance();
+			$user_like_count = $db->queryFetchSingle('SELECT COUNT(*) as cnt FROM ' . CHV\DB::getTable('likes').' WHERE like_content_user_id='. $logged_user['id']);
+			$json_array['content']  = [
+				'likes' => $user_like_count['cnt']
+			];
+		break;
+
+		case 'dislike':
+			$id = CHV\decodeID($_REQUEST['dislike']['id']);
+			$type = $_REQUEST['dislike']['object'];
+
+			$db = CHV\DB::getInstance();
+			$db->query("DELETE FROM `chv_likes` WHERE `like_content_type` = '" . $type . "' AND `like_content_id` = " . $id . " AND `like_user_id` = " . $logged_user['id'] );
+			$db->exec();
+
+			$json_array['success'] = [
+				'message' => $type . ' with id '. $id . ' disliked successfully',
+				'code' 	  => 200
+			];
+			$user_like_count = $db->queryFetchSingle('SELECT COUNT(*) as cnt FROM ' . CHV\DB::getTable('likes').' WHERE like_content_user_id='. $logged_user['id']);
+			$json_array['content']  = [
+				'likes' => $user_like_count['cnt']
+			];
+		break;
+
 			default: // EX X
 				throw new Exception(!G\check_value($_REQUEST['action']) ? 'empty action' : 'invalid action', !G\check_value($_REQUEST['action']) ? 0 : 1);
 			break;

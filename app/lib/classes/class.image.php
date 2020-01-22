@@ -1112,7 +1112,7 @@ class Image
                 return DB::update('images', $values, ['id' => $id]);
             }
         } catch (Excepton $e) {
-            throw new ImageException($e->getMessage(), 400);
+            throw new ImageException("An error occured, while updating.." + $e->getMessage(), 400);
         }
     }
 

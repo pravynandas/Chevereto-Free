@@ -373,8 +373,8 @@
 					<?php
                         echo CHV\Render\get_select_options_html([1 => _s('Enabled'), 0 => _s('Disabled')], CHV\Settings::get('enable_likes')); ?>
 				</select></div>
-				<?php free_version_waring(); ?>
-				<?php personal_mode_warning(); ?>
+				<?php //free_version_waring(); ?>
+				<?php //personal_mode_warning(); ?>
 			</div>
 
 			<div class="input-label">

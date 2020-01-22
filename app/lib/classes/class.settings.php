@@ -129,7 +129,7 @@ class Settings {
 			$settings = array_merge($settings, [
 				// Free tier
 				'enable_followers'			=> 0,
-				'enable_likes'				=> 0,
+				'enable_likes'				=> 1,
 				'social_signin'				=> 0,
 				'require_user_email_social_signup' => 0,
 				// HArdc0D3, so haxxor that it hurts!
@@ -190,7 +190,7 @@ class Settings {
 					$settings['website_mode'] = 'community';
 				}
 
-				$settings['enable_likes'] = FALSE;
+				$settings['enable_likes'] = TRUE;
 				$settings['enable_followers'] = FALSE;
 			}
 
