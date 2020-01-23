@@ -752,7 +752,7 @@
 
 			<div class="input-label">
 				<label for="upload_threads"><?php _se('Upload threads'); ?></label>
-				<div class="c2"><input type="number" min="1" max="5" pattern="\d+" name="upload_threads" id="upload_threads" class="text-input" value="<?php echo CHV\Settings::get('upload_threads'); ?>" placeholder="2" required></div>
+				<div class="c2"><input type="number" min="1" max="30" pattern="\d+" name="upload_threads" id="upload_threads" class="text-input" value="<?php echo CHV\Settings::get('upload_threads'); ?>" placeholder="2" required></div>
 				<div class="input-below input-warning red-warning"><?php echo get_input_errors()['upload_threads']; ?></div>
 				<div class="input-below"><?php _se('Number of simultaneous upload threads (parallel uploads)'); ?></div>
 			</div>
@@ -1417,7 +1417,7 @@
 				</div>
 				<div class="overflow-auto margin-bottom-10">
 					<label for="listing_columns_desktop" class="c2 float-left input-line-height"><?php _se('Desktop'); ?></label>
-					<input type="number" name="listing_columns_desktop" id="listing_columns_desktop" class="text-input c2" value="<?php echo CHV\Settings::get('listing_columns_desktop', true); ?>" placeholder="<?php echo CHV\Settings::getDefault('listing_columns_desktop', true); ?>" pattern="\d*" min="1" max="8" required>
+					<input type="number" name="listing_columns_desktop" id="listing_columns_desktop" class="text-input c2" value="<?php echo CHV\Settings::get('listing_columns_desktop', true); ?>" placeholder="<?php echo CHV\Settings::getDefault('listing_columns_desktop', true); ?>" pattern="\d*" min="1" max="20" required>
 				</div>
 				<div class="input-below input-warning red-warning"><?php echo get_input_errors()['listing_columns']; ?></div>
 			</div>

@@ -467,7 +467,7 @@ $route = function ($handler) {
                             ],
                         'upload_threads' =>
                             [
-                                'validate'	=> G\is_integer($_POST['upload_threads'], ['min' => 1, 'max' => 5]),
+                                'validate'	=> G\is_integer($_POST['upload_threads'], ['min' => 1, 'max' => 30]),
                                 'error_msg'	=> _s('Invalid value: %s', $_POST['upload_threads'])
                             ],
                         'upload_storage_mode'	=>
