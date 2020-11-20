@@ -6,14 +6,14 @@
 $list = function_exists('get_list') ? get_list() : G\get_global('list');
 $tabs = (array) (G\get_global('tabs') ? G\get_global('tabs') : (function_exists('get_tabs') ? get_tabs() : null));
 foreach ($tabs as $tab) {
-    if ($tab["list"] === false or $tab["tools"] === false) {
+    if ($tab['list'] === false or $tab['tools'] === false) {
         continue;
     } ?>
-<div data-content="list-selection" data-tab="<?php echo $tab["id"]; ?>" class="header--centering list-selection <?php $class = [];
-    if (count($list->output) == 0) {
+<div data-content="list-selection" data-tab="<?php echo $tab['id']; ?>" class="header--centering list-selection <?php $class = [];
+    if (is_array($list->output) == false || count($list->output) == 0) {
         $class[] = 'disabled';
     }
-    if (!$tab["current"]) {
+    if (!$tab['current']) {
         $class[] = 'hidden';
     }
     echo implode(' ', $class); ?>">
@@ -46,15 +46,18 @@ foreach ($tabs as $tab) {
 					<li><a data-action="assign-category"><?php _se('Assign category'); ?></a></li>
 					<?php
                         } ?>
-					<?php 
-                        if ((array_key_exists('tools_available', $tab) ? in_array('flag', $tab['tools_available']) : true)) {
+					<?php
+                        if (is_allowed_nsfw_flagging() && (array_key_exists('tools_available', $tab) ? (in_array('flag', $tab['tools_available'])) : true)) {
                             ?>
 					<li><a data-action="flag-safe" class="hidden"><?php _se('Flag as safe'); ?></a></li>
 					<li><a data-action="flag-unsafe" class="hidden"><?php _se('Flag as unsafe'); ?></a></li>
 					<?php
-                        } ?>
+                        }
+                            if (G\Handler::getRouteName() == 'moderate') { ?>
+                    <li><a data-action="approve"><?php _se('Approve'); ?></a></li>
                     <?php
-                        } ?>
+                            }
+                        } // images?>
 					<?php
                         if (is_allowed_to_delete_content() && (array_key_exists('tools_available', $tab) ? in_array('delete', $tab['tools_available']) : true)) {
                             ?>

@@ -2,16 +2,13 @@
 
 /* --------------------------------------------------------------------
 
-  Chevereto
-  http://chevereto.com/
+  This file is part of Chevereto Free.
+  https://chevereto.com/free
 
-  @author	Rodolfo Berrios A. <http://rodolfoberrios.com/>
-            <inbox@rodolfoberrios.com>
+  (c) Rodolfo Berrios <rodolfo@chevereto.com>
 
-  Copyright (C) Rodolfo Berrios A. All rights reserved.
-
-  BY USING THIS SOFTWARE YOU DECLARE TO ACCEPT THE CHEVERETO EULA
-  http://chevereto.com/license
+  For the full copyright and license information, please view the LICENSE
+  file that was distributed with this source code.
 
   --------------------------------------------------------------------- */
 
@@ -30,7 +27,7 @@ class ImageConvert
         $source_info = G\get_image_fileinfo($source);
         switch ($source_info['extension']) {
             case 'bmp':
-                $temp_image = function_exists('imagecreatefrombmp') ? imagecreatefrombmp($source) : G\imagecreatefrombmp($source);
+                $temp_image = G\imagecreatefrombmp($source);
             break;
             case 'jpg':
                 $temp_image = imagecreatefromjpeg($source);

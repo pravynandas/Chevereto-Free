@@ -2,33 +2,30 @@
 
 /* --------------------------------------------------------------------
 
-  Chevereto
-  http://chevereto.com/
+  This file is part of Chevereto Free.
+  https://chevereto.com/free
 
-  @author	Rodolfo Berrios A. <http://rodolfoberrios.com/>
-			<inbox@rodolfoberrios.com>
+  (c) Rodolfo Berrios <rodolfo@chevereto.com>
 
-  Copyright (C) Rodolfo Berrios A. All rights reserved.
-  
-  BY USING THIS SOFTWARE YOU DECLARE TO ACCEPT THE CHEVERETO EULA
-  http://chevereto.com/license
+  For the full copyright and license information, please view the LICENSE
+  file that was distributed with this source code.
 
   --------------------------------------------------------------------- */
 
-$route = function($handler) {
-	try {
-		if(!$handler::checkAuthToken($_REQUEST['auth_token'])) {
-			$handler->template = 'request-denied';
-			return;
-		}
-		if(CHV\Login::isLoggedUser()) {
-			CHV\Login::logout();
-			unset($_SESSION['last_url']);
-			G\redirect(G\get_current_url());
-		} else {
-			$handler::setVar('pre_doctitle', _s('Logged out'));
-		}
-	} catch(Exception $e) {
-		G\exception_to_error($e);
-	}
+$route = function ($handler) {
+    try {
+        if (!$handler::checkAuthToken($_REQUEST['auth_token'])) {
+            $handler->template = 'request-denied';
+
+            return;
+        }
+        if (CHV\Login::isLoggedUser()) {
+            CHV\Login::logout();
+            @session_start();
+            $access_token = $handler::getAuthToken();
+            $handler::setVar('auth_token', $access_token);
+        }
+    } catch (Exception $e) {
+        G\exception_to_error($e);
+    }
 };
